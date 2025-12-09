@@ -25,6 +25,7 @@
 * mcp client 
 
 ## scheduler
+* mcp server + actuator + webmvc
 * mcp service 
 
 ## security 
@@ -40,3 +41,8 @@
 * go back and add resource-server to ui 
 * add a `/dogs` endpoint and a `/me`
 * start `ui`
+
+## production 
+* graalvm for mcp service
+* virtual threads
+* 
