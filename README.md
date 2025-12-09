@@ -45,4 +45,3 @@
 ## production 
 * graalvm for mcp service
 * virtual threads
-* 
