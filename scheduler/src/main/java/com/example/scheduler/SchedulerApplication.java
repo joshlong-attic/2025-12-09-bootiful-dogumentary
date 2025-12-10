@@ -4,7 +4,7 @@ import org.springaicommunity.mcp.annotation.McpArg;
 import org.springaicommunity.mcp.annotation.McpTool;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -18,7 +18,8 @@ public class SchedulerApplication {
 
 }
 
-@Service
+
+@Component
 class DogAdoptionScheduler {
 
     @McpTool(description = "schedule an appointment to pick up or adopt a dog from a Pooch Palace location")
@@ -28,8 +29,7 @@ class DogAdoptionScheduler {
                 .now()
                 .plus(3, ChronoUnit.DAYS)
                 .toString();
-        IO.println("scheduling " + dogName + '/' + dogId + " for adoption " + i);
+        IO.println("adopting " + dogName + '/' + dogId + " on " + i);
         return i;
-
     }
 }

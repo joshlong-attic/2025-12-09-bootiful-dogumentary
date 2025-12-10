@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 class Dogtor {
 
     @ApplicationModuleListener
-    void on(DogAdoptedEvent e) throws Exception {
+    void checkup(DogAdoptedEvent dogId) throws Exception {
         Thread.sleep(5000);
-        IO.println("scheduling " + e + " for an appointment at the Dogtor");
+        IO.println("scheduling app't for " + dogId);
     }
 }

@@ -11,8 +11,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.ServerResponse;
 
-import static org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route;
 import static org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http;
+import static org.springframework.web.servlet.function.RouterFunctions.route;
 
 @SpringBootApplication
 public class GatewayApplication {
@@ -21,27 +21,38 @@ public class GatewayApplication {
         SpringApplication.run(GatewayApplication.class, args);
     }
 
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     @Bean
-    @Order(Ordered.LOWEST_PRECEDENCE)
-    RouterFunction<ServerResponse> ui() {
+    RouterFunction<@NonNull ServerResponse> api() {
         return route()
-                .before(BeforeFilterFunctions.uri("http://localhost:8020/"))
+                .before(BeforeFilterFunctions.uri("http://localhost:8080"))
+                .before(BeforeFilterFunctions.rewritePath("/api", "/"))
+                .filter(TokenRelayFilterFunctions.tokenRelay())
+                .GET("/api/**", http())
+                .build();
+    }
+
+    @Order(Ordered.LOWEST_PRECEDENCE)
+    @Bean
+    RouterFunction<@NonNull ServerResponse> ui() {
+        return route()
+                .before(BeforeFilterFunctions.uri("http://localhost:8020"))
                 .GET("/**", http())
                 .build();
     }
 
-    @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    RouterFunction<@NonNull ServerResponse> api() {
-        return route()
-                .filter(TokenRelayFilterFunctions.tokenRelay())
-                .before(BeforeFilterFunctions.uri("http://localhost:8080"))
-                .before(BeforeFilterFunctions.rewritePath("/api", "/"))
-                .GET("/api/**", http())
-                .build();
-
-
-    }
-
-
 }
+/*
+
+@Controller
+@ResponseBody
+class MeController {
+
+    @GetMapping("/me")
+    Map<String, String> me(Principal principal,
+                           @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient client) {
+        var at = client.getAccessToken();
+        IO.println(at.getTokenValue());
+        return Map.of("name", principal.getName());
+    }
+}*/
