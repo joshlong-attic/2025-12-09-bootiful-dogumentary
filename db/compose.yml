@@ -46,11 +46,33 @@ services:
     ports:
       - "5432:5432"
 
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: secret
+#  mongodb:
+#    image: mongo:latest
+#    container_name: mongodb
+#    ports:
+#      - "27017:27017"
+#    volumes:
+#      - mongodb_data:/data/db
+#    command: ["--replSet", "rs0", "--bind_ip_all"]
+#    healthcheck:
+#      test: mongosh --eval "db.adminCommand('ping')" --quiet || exit 1
+#      interval: 5s
+#      timeout: 5s
+#      retries: 10
+#      start_period: 15s
+#    labels:
+#      - "org.springframework.boot.service-connection=mongodb"
+#    restart: unless-stopped
+#
+#  mongodb-init:
+#    image: mongo:latest
+#    depends_on:
+#      mongodb:
+#        condition: service_healthy
+#    volumes:
+#      - ./mongo-init.sh:/mongo-init.sh:ro
+#    entrypoint: ["bash", "/mongo-init.sh"]
+#    restart: "no"
+#
+#volumes:
+#  mongodb_data:
