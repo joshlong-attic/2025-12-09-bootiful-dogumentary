@@ -1,12 +1,20 @@
 # To Do 
 
+
+## dashaun app advisor
+
 ## ui 
 * run `serve.sh`
+
+## batch
+* `schema.sql` to initialize the database 
+* batch job using the new starter (oh, hey, we also suport mongodb, too!)
+* easy ways to compose 
 
 ## adoptions
 * prancer
 * start.spring.io
-* java scripts
+* java "scripts"
 * adoptions (data jdbc, modulith, graalvm, integration)
 * sustainable architecture
 * reduce blast radius of change
