@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Adoption Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .chat-box {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .response-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 100px;
+            white-space: pre-wrap;
+            color: #333;
+        }
+
+        .loading {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>Dog Adoption Assistant</h1>
+
+    <div class="chat-box">
+        <label for="question">Ask a question about dog adoption:</label>
+        <input type="text" id="question" placeholder="e.g., What dogs are good with children?">
+        <button id="askBtn" onclick="askQuestion()">Ask</button>
+    </div>
+
+    <div class="response-box" id="response">
+        <div class="loading">Ask a question to get started...</div>
+    </div>
+</div>
+
+<script>
+    async function askQuestion() {
+        const question = document.getElementById('question').value.trim();
+        const responseDiv = document.getElementById('response');
+        const askBtn = document.getElementById('askBtn');
+
+        if (!question) {
+            responseDiv.innerHTML = '<span style="color: #999;">Please enter a question.</span>';
+            return;
+        }
+
+        askBtn.disabled = true;
+        responseDiv.innerHTML = '<div class="loading">Thinking...</div>';
+
+        try {
+            const response = await fetch(`/ask?question=${encodeURIComponent(question)}`);
+            const answer = await response.text();
+            responseDiv.textContent = answer;
+        } catch (error) {
+            responseDiv.innerHTML = `<span style="color: #d32f2f;">Error: ${error.message}</span>`;
+        } finally {
+            askBtn.disabled = false;
+        }
+    }
+
+    document.getElementById('question').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            askQuestion();
+        }
+    });
+</script>
+</body>
+</html>

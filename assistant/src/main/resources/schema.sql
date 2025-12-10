@@ -1,0 +1,1 @@
+drop table vector_store;

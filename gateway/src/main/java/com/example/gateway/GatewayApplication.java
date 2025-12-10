@@ -22,20 +22,11 @@ public class GatewayApplication {
     }
 
     @Bean
-    @Order(Ordered.LOWEST_PRECEDENCE)
-    RouterFunction<ServerResponse> ui() {
-        return route()
-                .before(BeforeFilterFunctions.uri("http://localhost:8020/"))
-                .GET("/**", http())
-                .build();
-    }
-
-    @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     RouterFunction<@NonNull ServerResponse> api() {
         return route()
                 .filter(TokenRelayFilterFunctions.tokenRelay())
-                .before(BeforeFilterFunctions.uri("http://localhost:8080"))
+                .before(BeforeFilterFunctions.uri("https://adoptions.apps.tas-ndc.kuhn-labs.com"))
                 .before(BeforeFilterFunctions.rewritePath("/api", "/"))
                 .GET("/api/**", http())
                 .build();

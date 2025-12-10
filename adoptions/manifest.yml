@@ -1,0 +1,14 @@
+applications:
+  - name: adoptions
+    random-route: false
+    path: target/adoptions-0.0.1-SNAPSHOT.jar
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 25.+ } }'
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: https://auth.apps.tas-ndc.kuhn-labs.com
+    buildpacks:
+      - java_buildpack_offline
+    memory: 1G
+    instances: 1
+    services:
+      - adoptions-pg
+      - gpt-oss

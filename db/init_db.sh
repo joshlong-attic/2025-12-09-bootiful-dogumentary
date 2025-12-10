@@ -12,6 +12,8 @@ $sql_input
 EOF
 }
 
+run_psql "drop table authorities "
+run_psql "drop table users "
 run_psql "drop table vector_store "
 run_psql "drop table event_publication "
 run_psql "drop table dog "

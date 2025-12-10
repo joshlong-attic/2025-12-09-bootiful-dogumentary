@@ -1,0 +1,16 @@
+applications:
+  - name: assistant
+    random-route: false
+    path: target/assistant-0.0.1-SNAPSHOT.jar
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 25.+ } }'
+      SPRING_AI_VECTORSTORE_PGVECTOR_DIMENSIONS: 768
+      SPRING_SQL_INIT_MODE: always
+      SPRING_AI_MCP_CLIENT_SSE_CONNECTIONS_SCHEDULER_URL: https://scheduler.apps.tas-ndc.kuhn-labs.com
+    buildpacks:
+      - java_buildpack_offline
+    memory: 1G
+    instances: 1
+    services:
+      - adoptions-pg
+      - gpt-oss

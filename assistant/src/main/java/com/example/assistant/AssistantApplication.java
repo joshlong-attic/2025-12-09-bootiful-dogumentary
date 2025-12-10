@@ -1,6 +1,5 @@
 package com.example.assistant;
 
-import io.modelcontextprotocol.client.McpClient;
 import io.modelcontextprotocol.client.McpSyncClient;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.PromptChatMemoryAdvisor;
@@ -22,11 +21,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.sql.DataSource;
+import java.security.Principal;
 import java.util.List;
 
 @SpringBootApplication
@@ -90,7 +89,6 @@ class AssistantController {
             PromptChatMemoryAdvisor memory,
             ChatClient.Builder ai) {
 
-        if (false)
             repository.findAll().forEach(dog -> {
                 var dogument = new Document("id: %s, name: %s, description: %s".formatted(
                         dog.id(), dog.name(), dog.description()
@@ -113,11 +111,11 @@ class AssistantController {
                 .build();
     }
 
-    @GetMapping("/{user}/ask")
-    String question(@PathVariable String user, @RequestParam String question) {
+    @GetMapping("/ask")
+    String question(@RequestParam String question, Principal principal) {
         return this.ai
                 .prompt(question)
-                .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, user))
+                .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, principal != null ? principal.getName() : "Anonymous"))
                 .call()
                 .content();
 //                .entity(DogAdoptionSuggestion.class);

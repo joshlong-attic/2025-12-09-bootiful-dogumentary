@@ -33,10 +33,10 @@ public class AuthApplication {
                         .tokenGenerationSuccessHandler((_, response, oneTimeToken) -> {
                             response.getWriter().println("you've got console mail!");
                             response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE);
-                            IO.println("please go to http://localhost:9090/login/ott?token=" + oneTimeToken.getTokenValue());
+                            IO.println("please go to https://auth.apps.tas-ndc.kuhn-labs.com/login/ott?token=" + oneTimeToken.getTokenValue());
                         }))
                 .webAuthn(a -> a
-                        .allowedOrigins("http://localhost:9090")
+                        .allowedOrigins("https://auth.apps.tas-ndc.kuhn-labs.com")
                         .rpName("bootiful")
                         .rpId("localhost")
                 );

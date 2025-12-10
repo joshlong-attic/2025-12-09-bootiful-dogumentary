@@ -1,0 +1,13 @@
+applications:
+  - name: auth
+    random-route: false
+    path: target/auth-0.0.1-SNAPSHOT.jar
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 25.+ } }'
+      SPRING_SECURITY_OAUTH2_AUTHORIZATIONSERVER_CLIENT_OIDC_CLIENT_REGISTRATION_REDIRECT_URIS: https://gateway.apps.tas-ndc.kuhn-labs.com/login/oauth2/code/spring
+    buildpacks:
+      - java_buildpack_offline
+    memory: 1G
+    instances: 1
+    services:
+      - adoptions-pg
