@@ -6,7 +6,7 @@ applications:
       JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 25.+ } }'
       SPRING_AI_VECTORSTORE_PGVECTOR_DIMENSIONS: 768
       SPRING_SQL_INIT_MODE: always
-      SPRING_AI_MCP_CLIENT_SSE_CONNECTIONS_SCHEDULER_URL: https://scheduler.apps.tas-ndc.kuhn-labs.com
+      SPRING_AI_MCP_CLIENT_SSE_CONNECTIONS_SCHEDULER_URL: 'https://scheduler.apps.tas-ndc.kuhn-labs.com/sse'
     buildpacks:
       - java_buildpack_offline
     memory: 1G

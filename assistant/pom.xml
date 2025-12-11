@@ -69,16 +69,6 @@
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-mcp-client</artifactId>
         </dependency>
-		<dependency>
-			<groupId>io.pivotal.cfenv</groupId>
-			<artifactId>java-cfenv-boot</artifactId>
-			<version>3.5.0</version>
-		</dependency>
-		<dependency>
-			<groupId>io.pivotal.cfenv</groupId>
-			<artifactId>java-cfenv-boot-tanzu-genai</artifactId>
-			<version>3.5.0</version>
-		</dependency>
     </dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -91,6 +81,27 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<profiles>
+		<profile>
+			<id>cloudfoundry</id>
+			<properties>
+				<maven.test.skip>true</maven.test.skip>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>io.pivotal.cfenv</groupId>
+					<artifactId>java-cfenv-boot</artifactId>
+					<version>3.5.0</version>
+				</dependency>
+				<dependency>
+					<groupId>io.pivotal.cfenv</groupId>
+					<artifactId>java-cfenv-boot-tanzu-genai</artifactId>
+					<version>3.5.0</version>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 
 	<build>
 		<plugins>

@@ -104,6 +104,7 @@ class AssistantController {
                 don't have any dogs available.
                 """;
 
+        IO.println("***** MCP Tools: %s".formatted(clients.size()));
         this.ai = ai
                 .defaultSystem(system)
                 .defaultToolCallbacks(SyncMcpToolCallbackProvider.syncToolCallbacks(clients))
@@ -115,7 +116,7 @@ class AssistantController {
     String question(@RequestParam String question, Principal principal) {
         return this.ai
                 .prompt(question)
-                .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, principal != null ? principal.getName() : "Anonymous"))
+                .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, principal != null ? principal.getName() : "Josh"))
                 .call()
                 .content();
 //                .entity(DogAdoptionSuggestion.class);
