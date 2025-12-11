@@ -11,4 +11,3 @@ applications:
     instances: 1
     services:
       - adoptions-pg
-      - gpt-oss
